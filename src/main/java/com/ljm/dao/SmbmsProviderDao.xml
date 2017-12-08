@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.ljm.dao.SmbmsProviderDao"> 
+	<!-- 分页查询供应商 -->
+   <select id="getListSmbmsProvider" resultType="SmbmsProvider">
+   SELECT * FROM `smbms_provider` 
+   <trim prefix="where" prefixOverrides="and | or">
+   	<if test="proCode != null and proCode != '' ">and `proCode` like CONCAT('%',#{proCode},'%')</if>
+   	<if test="proName != null and proName != '' ">and `proName` like CONCAT('%',#{proName},'%')</if>
+   </trim>
+   LIMIT #{pageIndex},#{pagaSize}
+   </select>
+   <!-- 查询供应商行数 -->
+   <select id="getSmbmsProviderRows" resultType="Integer">
+   SELECT COUNT(1) FROM `smbms_provider` 
+   <trim prefix="where" prefixOverrides="and | or">
+   	<if test="proCode != null and proCode != '' ">and `proCode` like CONCAT('%',#{proCode},'%')</if>
+   	<if test="proName != null and proName != '' ">and `proName` like CONCAT('%',#{proName},'%')</if>
+   </trim>
+   </select>
+   <!-- 新增供应商 -->
+   <insert id="addSmbmsProvider" parameterType="SmbmsProvider">
+   INSERT INTO `smbms_provider`
+            (
+            <trim suffixOverrides=",">
+				<if test="id != null ">id,</if>
+				<if test="proCode != null ">proCode,</if>
+				<if test="proName != null ">proName,</if>
+				<if test="proDesc != null ">proDesc,</if>
+				<if test="proContact != null ">proContact,</if>
+				<if test="proPhone != null ">proPhone,</if>
+				<if test="proAddress != null ">proAddress,</if>
+				<if test="proFax != null ">proFax,</if>
+				<if test="createdBy != null ">createdBy,</if>
+				<if test="creationDate != null ">creationDate,</if>
+				<if test="modifyDate != null ">modifyDate,</if>
+				<if test="modifyBy != null ">modifyBy,</if>
+				<if test="license != null ">license,</if>
+				<if test="frontCode != null ">frontCode,</if>
+				<if test="sideCode != null ">sideCode,</if>
+			</trim>
+             )
+	VALUES (
+			<trim suffixOverrides=",">
+				<if test="id != null ">#{id},</if>
+				<if test="proCode != null ">#{proCode},</if>
+				<if test="proName != null ">#{proName},</if>
+				<if test="proDesc != null ">#{proDesc},</if>
+				<if test="proContact != null ">#{proContact},</if>
+				<if test="proPhone != null ">#{proPhone},</if>
+				<if test="proAddress != null ">#{proAddress},</if>
+				<if test="proFax != null ">#{proFax},</if>
+				<if test="createdBy != null ">#{createdBy},</if>
+				<if test="creationDate != null ">#{creationDate},</if>
+				<if test="modifyDate != null ">#{modifyDate},</if>
+				<if test="modifyBy != null ">#{modifyBy},</if>
+				<if test="license != null ">#{license},</if>
+				<if test="frontCode != null ">#{frontCode},</if>
+				<if test="sideCode != null ">#{sideCode},</if>
+			</trim>
+	        )
+   </insert>
+   <!-- 按id查询供应商信息 -->
+   <select id="getSmbmsProviderByid" parameterType="Long" resultType="SmbmsProvider">
+   SELECT * FROM `smbms_provider` 
+   where id = #{id}
+   </select>
+   <!-- 删除供应商信息 -->
+   <delete id="deleteSmbmsProvider" parameterType="Long">
+   	DELETE
+	FROM `smbms_provider`
+	WHERE `id` = #{id}
+   </delete>
+   
+   <update id="updateSmbmsProvider" parameterType="SmbmsProvider">
+   UPDATE `smbms_provider`
+	SET 
+	  <trim suffixOverrides=",">
+		<if test="id != null ">id,</if>
+		<if test="proCode != null ">proCode,</if>
+		<if test="proName != null ">proName,</if>
+		<if test="proDesc != null ">proDesc,</if>
+		<if test="proContact != null ">proContact,</if>
+		<if test="proPhone != null ">proPhone,</if>
+		<if test="proAddress != null ">proAddress,</if>
+		<if test="proFax != null ">proFax,</if>
+		<if test="createdBy != null ">createdBy,</if>
+		<if test="creationDate != null ">creationDate,</if>
+		<if test="modifyDate != null ">modifyDate,</if>
+		<if test="modifyBy != null ">modifyBy,</if>
+		<if test="license != null ">license,</if>
+		<if test="frontCode != null ">frontCode,</if>
+		<if test="sideCode != null ">sideCode,</if>
+	 </trim>
+	WHERE `id` = #{id}
+   </update>
+</mapper>
