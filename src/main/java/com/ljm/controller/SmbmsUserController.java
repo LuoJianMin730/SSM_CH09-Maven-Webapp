@@ -93,13 +93,26 @@ public class SmbmsUserController {
 		model.addAttribute("queryUserRole", queryUserRole);
 		return "jsp/userlist";
 	}
-	
+	/**
+	 * 跳转添加用户信息页面
+	 * @param user
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("goAdduser.do")
 	public String goAddUser(@ModelAttribute("user") SmbmsUser user,Model model){
 		model.addAttribute("roles", getMap(smbmsRoleService.getListSmbmsRoles()));
 		return "jsp/adduser";
 	}
-	
+	/**
+	 * 添加用户信息
+	 * @param user
+	 * @param result
+	 * @param session
+	 * @param photos
+	 * @param req
+	 * @return
+	 */
 	@RequestMapping("addUser.do")
 	public String addUser(@ModelAttribute("user") @Valid SmbmsUser user,BindingResult result,HttpSession session,@RequestParam("licenses") MultipartFile[] photos,
 			HttpServletRequest req){
@@ -133,7 +146,12 @@ public class SmbmsUserController {
 		}
 		return "jsp/adduser";//回到页面
 	}
-	
+	/**
+	 * 拼接图片文件名称
+	 * @param photo
+	 * @param path
+	 * @return
+	 */
 	public String upload(MultipartFile photo,String path){
 		String fileName = photo.getOriginalFilename();
 		long time = System.currentTimeMillis();
@@ -197,10 +215,111 @@ public class SmbmsUserController {
 		SmbmsUser smbmsUserByUserCode = smbmsUserService.getSmbmsUserByUserCode(userCode);
 		return JSONArray.toJSONString(smbmsUserByUserCode);
 	}
-	
+	/**
+	 * 跳转用户详情页面
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("viewUser/{id}")
 	public String viewUser(@PathVariable("id") Long id,Map<String,Object> model){
 		model.put("user", smbmsUserService.getSmbmsUserByid(id));
 		return "jsp/userview";
+	}
+	
+	/**
+	 * JSON
+	 * 验证密码
+	 * @param oldpassword
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("verifyPwd.do")
+	@ResponseBody
+	public Object verifyPwd(String oldpassword,HttpSession session){
+		Map<String, String> map = new HashMap<String, String>();
+		SmbmsUser smbmsUser = smbmsUserService.getSmbmsUserByid(((SmbmsUser) session.getAttribute("userSession")).getId());
+		if (smbmsUser.getUserPassword().equals(oldpassword)) {
+			map.put("result", "true");
+		}else if(smbmsUser == null){
+			map.put("result", "sessionerror");
+		}else if(oldpassword.isEmpty()){
+			map.put("result", "error");
+		}else{
+			map.put("result", "false");
+		}
+		return JSONArray.toJSONString(map);
+	}
+	/**
+	 * 修改密码
+	 * @param newpassword
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("modifyPwd.do")
+	public String modifyPwd(@RequestParam("newpassword") String newpassword, HttpSession session){
+		int resultConut = smbmsUserService.updatePwd(((SmbmsUser) session.getAttribute("userSession")).getId(), newpassword);
+		if (resultConut > 0) {
+			return "redirect:user.do";
+		}
+		return "jsp/pwdmodify";
+	}
+	/**
+	 * 删除用户信息
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("deleteUser.do")
+	@ResponseBody
+	public Object deleteUser(Long id){
+		Map<String, String> map = new HashMap<String, String>();
+		if (smbmsUserService.deleteSmbmsUser(id) > 0) {
+			map.put("delResult", "true");
+		}else {
+			map.put("delResult", "false");
+		}
+		return JSONArray.toJSONString(map);
+	}
+	/**
+	 * 跳转更新用户信息页面
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("goUpdateUser.do")
+	public String goUpdateUser(Long id,Model model){
+		model.addAttribute("user",smbmsUserService.getSmbmsUserByid(id));
+		model.addAttribute("roleList", smbmsRoleService.getListSmbmsRoles());
+		return "jsp/usermodify";
+	}
+	/**
+	 * 修改用户信息
+	 * @param id
+	 * @param userName
+	 * @param gender
+	 * @param birthday
+	 * @param phone
+	 * @param address
+	 * @param userRole
+	 * @param photos
+	 * @param req
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("updateUser.do")
+	public String updateUser(@RequestParam("id") Long id,@RequestParam("userName") String userName,@RequestParam("gender") Integer gender,
+			@RequestParam("birthday") Date birthday,@RequestParam("phone") String phone,@RequestParam("address") String address,
+			@RequestParam("userRole") Integer userRole,@RequestParam("licenses") MultipartFile[] photos,
+			HttpServletRequest req,HttpSession session){
+		String path = req.getSession().getServletContext().getRealPath("licenses");
+		SmbmsUser user = new SmbmsUser(id,userName,gender,birthday,phone,address,userRole);
+		user.setModifyBy(id);
+		user.setModifyDate(new Timestamp(System.currentTimeMillis()));
+		user.setIdPicPath("licenses" + File.separator + upload(photos[0], path));
+		user.setWorkPicPath("licenses" + File.separator + upload(photos[1], path));
+		if (smbmsUserService.updateSmbmsUser(user) > 0) {
+			return "redirect:user.do";
+		}
+		return "jsp/usermodify";
 	}
 }

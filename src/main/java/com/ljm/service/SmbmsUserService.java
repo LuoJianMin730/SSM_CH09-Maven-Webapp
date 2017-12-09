@@ -19,4 +19,10 @@ public interface SmbmsUserService {
 	int addSmbmsUser(SmbmsUser smbmsUser);
 	
 	SmbmsUser getSmbmsUserByid(Long id);
+	
+	int updatePwd(Long id,String userPassword);
+	
+	int deleteSmbmsUser(Long id);
+	
+	int updateSmbmsUser(SmbmsUser user);
 }

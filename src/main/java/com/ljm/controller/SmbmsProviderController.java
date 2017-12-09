@@ -89,7 +89,7 @@ public class SmbmsProviderController {
 					return "redirect:provider.do";
 				}
 			}
-			req.setAttribute("errors", errors);
+			session.setAttribute("errors", errors);
 			req.setAttribute("filenames", filenames);
 		}
 		return "jsp/provideradd";//回到页面
@@ -166,9 +166,20 @@ public class SmbmsProviderController {
 		model.addAttribute("provider", smbmsProviderService.getSmbmsProviderByid(id));
 		return "jsp/providermodify";
 	}
+	
+	/**
+	 * 更新供应商信息
+	 * @param smbmsProvider
+	 * @return
+	 */
 	@RequestMapping("modifyProvider.do")
-	public String modifyProvider(SmbmsProvider smbmsProvider){
-		if (smbmsProviderService.updateSmbmsProvider(smbmsProvider) > 0) {
+	public String modifyProvider(@ModelAttribute("provider") @Valid SmbmsProvider provider,BindingResult result,HttpSession session,@RequestParam("licenses") MultipartFile[] photos,
+			HttpServletRequest req){
+		String path = req.getSession().getServletContext().getRealPath("licenses");
+		provider.setLicense("licenses" + File.separator + upload(photos[0], path));
+		provider.setFrontCode("licenses" + File.separator + upload(photos[1], path));
+		provider.setSideCode("licenses" + File.separator + upload(photos[2], path));
+		if (smbmsProviderService.updateSmbmsProvider(provider) > 0) {
 			return "redirect:provider.do";
 		}
 		return "jsp/providermodify";

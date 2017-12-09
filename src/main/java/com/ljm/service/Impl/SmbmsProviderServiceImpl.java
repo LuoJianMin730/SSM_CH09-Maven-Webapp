@@ -38,4 +38,8 @@ public class SmbmsProviderServiceImpl implements SmbmsProviderService {
 	public int updateSmbmsProvider(SmbmsProvider smbmsProvider) {
 		return smbmsProviderDao.updateSmbmsProvider(smbmsProvider);
 	}
+
+	public List<SmbmsProvider> getListSmbmsProviderAll() {
+		return smbmsProviderDao.getListSmbmsProviderAll();
+	}
 }

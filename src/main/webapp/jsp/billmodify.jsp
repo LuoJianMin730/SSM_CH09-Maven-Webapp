@@ -8,7 +8,7 @@
             <span>订单管理页面 >> 订单添加页面</span>
         </div>
         <div class="providerAdd">
-          <form id="billForm" name="billForm" method="post" action="${pageContext.request.contextPath }/jsp/bill.do">
+          <form id="billForm" name="billForm" method="post" action="${pageContext.request.contextPath }/bill/modifyBill.do">
 				<input type="hidden" name="method" value="modifysave">
 				<input type="hidden" name="id" value="${bill.id }">
                 <!--div的class 为error是验证错误，ok是验证成功-->
@@ -21,6 +21,11 @@
                     <input type="text" name="productName" id="productName" value="${bill.productName }"> 
 					<font color="red"></font>
                 </div>
+                <div>
+	                 <label for="productDesc">商品描述：</label>
+	                 <input type="text" name="productDesc" id="productDesc" value="${bill.productDesc }"> 
+					 <font color="red"></font>
+            	</div>
                 <div>
                     <label for="productUnit">商品单位：</label>
                     <input type="text" name="productUnit" id="productUnit" value="${bill.productUnit }"> 
@@ -39,8 +44,18 @@
                 <div>
                     <label for="providerId">供应商：</label>
                     <input type="hidden" value="${bill.providerId }" id="pid" />
-					<select name="providerId" id="providerId">
-		        	</select>
+					<!-- <select name="providerId" id="providerId"></select> -->
+					
+					<select name="providerId">
+						<c:if test="${providerList != null }">
+						   <option value="0">--请选择--</option>
+						   <c:forEach var="provider" items="${providerList}">
+						   		<option <c:if test="${provider.id == bill.providerId }">selected="selected"</c:if>
+						   		value="${provider.id}">${provider.proName}</option>
+						   </c:forEach>
+						</c:if>
+	       		   </select>
+					
 					<font color="red"></font>
                 </div>
                 <div>

@@ -8,8 +8,7 @@
            <span>订单管理页面</span>
        </div>
        <div class="search">
-       <form method="get" action="${pageContext.request.contextPath }/jsp/bill.do">
-			<input name="method" value="query" class="input-text" type="hidden">
+       <form method="post" action="${pageContext.request.contextPath }/bill/getSmbmsBillList.do">
 			<span>商品名称：</span>
 			<input name="queryProductName" type="text" value="${queryProductName }">
 			 
@@ -30,9 +29,10 @@
 				<option value="1" ${queryIsPayment == 1 ? "selected=\"selected\"":"" }>未付款</option>
 				<option value="2" ${queryIsPayment == 2 ? "selected=\"selected\"":"" }>已付款</option>
        		</select>
-			
+       		
+			 <input type="hidden" name="pageIndex" value="1"/>
 			 <input	value="查 询" type="submit" id="searchbutton">
-			 <a href="${pageContext.request.contextPath }/jsp/billadd.jsp">添加订单</a>
+			 <a href="${pageContext.request.contextPath }/bill/goAddSmbmsBill.do">添加订单</a>
 		</form>
        </div>
        <!--账单表格 样式和供应商公用-->
@@ -55,7 +55,7 @@
 					<span>${bill.productName }</span>
 					</td>
 					<td>
-					<span>${bill.providerName}</span>
+					<span>${bill.proName}</span>
 					</td>
 					<td>
 					<span>${bill.totalPrice}</span>
@@ -79,6 +79,12 @@
 				</tr>
 			</c:forEach>
       </table>
+      <input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
+	  	<c:import url="rollpage.jsp">
+          	<c:param name="totalCount" value="${totalCount}"/>
+          	<c:param name="currentPageNo" value="${currentPageNo}"/>
+          	<c:param name="totalPageCount" value="${totalPageCount}"/>
+        </c:import>
   </div>
 </section>
 

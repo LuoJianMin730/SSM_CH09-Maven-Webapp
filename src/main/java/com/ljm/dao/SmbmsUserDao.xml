@@ -75,4 +75,37 @@
    	select u.*,r.roleName from smbms_user u inner join smbms_role r on u.userRole = r.id
    	where u.id = #{id}
    </select>
+   <!-- 修改用户密码 -->
+   <update id="updatePwd" >
+    UPDATE `smbms_user`
+	SET `userPassword` = #{userPassword}
+	WHERE `id` = #{id}
+   </update>
+   <!-- 删除用户信息 -->
+   <delete id="deleteSmbmsUser" parameterType="Long">
+   DELETE
+	FROM `smbms_user`
+	WHERE `id` = #{id}
+   </delete>
+   <!-- 修改用户信息 -->
+   <update id="updateSmbmsUser" parameterType="SmbmsUser">
+   UPDATE `smbms_user`
+	SET 
+		<trim suffixOverrides=",">
+			<if test="userCode != null ">`userCode` = #{userCode},</if>
+			<if test="userName != null ">`userName` = #{userName},</if>
+			<if test="gender != null ">`gender` = #{gender},</if>
+			<if test="birthday != null ">`birthday` = #{birthday},</if>
+			<if test="phone != null ">`phone` = #{phone},</if>
+			<if test="address != null ">`address` = #{address},</if>
+			<if test="userRole != null ">`userRole` = #{userRole},</if>
+			<if test="createdBy != null ">`createdBy` = #{createdBy},</if>
+			<if test="creationDate != null ">`creationDate` = #{creationDate},</if>
+			<if test="modifyBy != null ">`modifyBy` = #{modifyBy},</if>
+			<if test="modifyDate != null ">`modifyDate` = #{modifyDate},</if>
+			<if test="idPicPath != null and idPicPath != '' ">`idPicPath` = #{idPicPath},</if>
+			<if test="workPicPath != null and workPicPath != '' ">`workPicPath` = #{workPicPath},</if>
+		</trim>
+	WHERE `id` = #{id};
+   </update>
 </mapper>

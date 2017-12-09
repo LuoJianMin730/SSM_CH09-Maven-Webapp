@@ -41,4 +41,17 @@ public class SmbmsUserServiceImpl implements SmbmsUserService {
 	public SmbmsUser getSmbmsUserByid(Long id) {
 		return smbmsUserDao.getSmbmsUserByid(id);
 	}
+
+	public int updatePwd(Long id, String userPassword) {
+		return smbmsUserDao.updatePwd(id, userPassword);
+	}
+
+	public int deleteSmbmsUser(Long id) {
+		return smbmsUserDao.deleteSmbmsUser(id);
+	}
+
+	public int updateSmbmsUser(SmbmsUser user) {
+		return smbmsUserDao.updateSmbmsUser(user);
+	}
+
 }

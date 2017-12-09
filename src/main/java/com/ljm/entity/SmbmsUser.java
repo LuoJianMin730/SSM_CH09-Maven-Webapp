@@ -163,5 +163,16 @@ public class SmbmsUser implements java.io.Serializable {
 		this.modifyBy = modifyBy;
 		this.modifyDate = modifyDate;
 	}
+	public SmbmsUser(Long id, String userName, Integer gender, Date birthday,
+			String phone, String address, Integer userRole) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.gender = gender;
+		this.birthday = birthday;
+		this.phone = phone;
+		this.address = address;
+		this.userRole = userRole;
+	}
 
 }

@@ -49,6 +49,7 @@
 			<tx:method name="register" propagation="REQUIRED"/>
 			<tx:method name="del*" propagation="REQUIRED"/>
 			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="modify*" propagation="REQUIRED"/>
 			<tx:method name="do*" propagation="REQUIRED"/>
 			<tx:method name="*" read-only="true" propagation="REQUIRED"/>
 		</tx:attributes>

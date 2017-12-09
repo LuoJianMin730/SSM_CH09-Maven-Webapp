@@ -4,8 +4,8 @@ var userObj;
 function deleteUser(obj){
 	$.ajax({
 		type:"GET",
-		url:path+"/jsp/user.do",
-		data:{method:"deluser",uid:obj.attr("userid")},
+		url:path+"/user/deleteUser.do",
+		data:{id:obj.attr("userid")},
 		dataType:"json",
 		success:function(data){
 			if(data.delResult == "true"){//删除成功：移除删除行
@@ -55,7 +55,7 @@ $(function(){
 	
 	$(".modifyUser").on("click",function(){
 		var obj = $(this);
-		window.location.href=path+"/jsp/user.do?method=modify&uid="+ obj.attr("userid");
+		window.location.href=path+"/user/goUpdateUser.do?id="+ obj.attr("userid");
 	});
 
 	$('#no').click(function () {

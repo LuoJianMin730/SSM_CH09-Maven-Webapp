@@ -19,4 +19,6 @@ public interface SmbmsProviderService {
 	int deleteSmbmsProvider(Long id);
 	
 	int updateSmbmsProvider(SmbmsProvider smbmsProvider);
+	
+	List<SmbmsProvider> getListSmbmsProviderAll();
 }

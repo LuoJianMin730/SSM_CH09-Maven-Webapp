@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="fm" %>
 <%@include file="/jsp/common/head.jsp"%>
     <div class="right">
         <div class="location">
@@ -7,9 +8,9 @@
             <span>用户管理页面 >> 用户修改页面</span>
         </div>
         <div class="providerAdd">
-        <form id="userForm" name="userForm" method="post" action="${pageContext.request.contextPath }/jsp/user.do">
-			<input type="hidden" name="method" value="modifyexe">
-			<input type="hidden" name="uid" value="${user.id }"/>
+        <form id="userForm" name="userForm" method="post" action="${pageContext.request.contextPath }/user/updateUser.do"
+          enctype="multipart/form-data">
+			<input type="hidden" name="id" value="${user.id }"/>
 			 <div>
                     <label for="userName">用户名称：</label>
                     <input type="text" name="userName" id="userName" value="${user.userName }"> 
@@ -46,11 +47,33 @@
                     <label for="userAddress">用户地址：</label>
                     <input type="text" name="address" id="address" value="${user.address }">
                 </div>
+                
+                 <div>
+                    <label for="proDesc">执照：</label>
+                    <img src="${pageContext.request.contextPath }/${user.idPicPath }">
+                    <input type="file" name="licenses">
+                </div>
+                 <div>
+                    <label for="proDesc">工作证照：</label>
+                    <img src="${pageContext.request.contextPath }/${user.workPicPath }">
+                    <input type="file" name="licenses">
+                </div>
+                
 				<div>
                     <label >用户角色：</label>
                     <!-- 列出所有的角色分类 -->
 					<input type="hidden" value="${user.userRole }" id="rid" />
-					<select name="userRole" id="userRole"></select>
+					<!-- <select name="userRole" id="userRole"></select> -->
+					<select name="userRole">
+						<c:if test="${roleList != null }">
+						   <option value="0">--请选择--</option>
+						   <c:forEach var="role" items="${roleList}">
+						   		<option <c:if test="${role.id == user.userRole }">selected="selected"</c:if>
+						   		value="${role.id}">${role.roleName}</option>
+						   </c:forEach>
+						</c:if>
+	        		</select>
+					
         			<font color="red"></font>
                 </div>
 			 <div class="providerAddBtn">

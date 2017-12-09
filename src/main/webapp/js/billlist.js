@@ -4,8 +4,8 @@ var billObj;
 function deleteBill(obj){
 	$.ajax({
 		type:"GET",
-		url:path+"/jsp/bill.do",
-		data:{method:"delbill",billid:obj.attr("billid")},
+		url:path+"/bill/deteleSmbmsBill.do",
+		data:{id:obj.attr("billid")},
 		dataType:"json",
 		success:function(data){
 			if(data.delResult == "true"){//删除成功：移除删除行
@@ -43,12 +43,12 @@ $(function(){
 	$(".viewBill").on("click",function(){
 		//将被绑定的元素（a）转换成jquery对象，可以使用jquery方法
 		var obj = $(this);
-		window.location.href=path+"/jsp/bill.do?method=view&billid="+ obj.attr("billid");
+		window.location.href=path+"/bill/viewSmbmsBill/"+ obj.attr("billid");
 	});
 	
 	$(".modifyBill").on("click",function(){
 		var obj = $(this);
-		window.location.href=path+"/jsp/bill.do?method=modify&billid="+ obj.attr("billid");
+		window.location.href=path+"/bill/goModifyBill/"+ obj.attr("billid");
 	});
 	$('#no').click(function () {
 		cancleBtn();
@@ -69,8 +69,8 @@ $(function(){
 		if(confirm("你确定要删除订单【"+obj.attr("billcc")+"】吗？")){
 			$.ajax({
 				type:"GET",
-				url:path+"/bill.do",
-				data:{method:"delbill",billid:obj.attr("billid")},
+				url:path+"/bill/deteleSmbmsBill.do",
+				data:{id:obj.attr("billid")},
 				dataType:"json",
 				success:function(data){
 					if(data.delResult == "true"){//删除成功：移除删除行

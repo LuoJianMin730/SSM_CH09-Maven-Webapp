@@ -36,7 +36,7 @@ $(function(){
 	totalPrice.next().html("*");
 	providerId.next().html("*");
 	
-	$.ajax({
+	/*$.ajax({
 		type:"GET",//请求类型
 		url:path+"/jsp/bill.do",//请求的url
 		data:{method:"getproviderlist"},//请求参数
@@ -56,7 +56,7 @@ $(function(){
 		error:function(data){//当访问时候，404，500 等非200的错误状态码
 			validateTip(providerId.next(),{"color":"red"},imgNo+" 获取供应商列表error",false);
 		}
-	});
+	});*/
 	/*
 	 * 验证
 	 * 失焦\获焦
@@ -124,14 +124,18 @@ $(function(){
 	
 	addBtn.on("click",function(){
 		if(billCode.attr("validateStatus") != "true"){
+			confirm("1");
 			billCode.blur();
 		}else if(productName.attr("validateStatus") != "true"){
+			confirm("2");
 			productName.blur();
 		}else if(productUnit.attr("validateStatus") != "true"){
+			confirm("3");
 			productUnit.blur();
-		}else if(providerId.attr("validateStatus") != "true"){
+		}/*else if(providerId.attr("validateStatus") != "true"){
+			confirm("4");
 			providerId.blur();
-		}else{
+		}*/else{
 			if(confirm("是否确认提交数据")){
 				$("#billForm").submit();
 			}

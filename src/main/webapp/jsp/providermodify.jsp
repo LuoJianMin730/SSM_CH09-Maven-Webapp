@@ -8,10 +8,12 @@
           <span>供应商管理页面 >> 供应商修改页</span>
       </div>
       <div class="providerAdd">
-          <form id="providerForm" name="providerForm" method="post" action="${pageContext.request.contextPath }/provider/modifyProvider.do">
+          <form id="providerForm" name="providerForm" method="post" action="${pageContext.request.contextPath }/provider/modifyProvider.do"
+           enctype="multipart/form-data">
               <!--div的class 为error是验证错误，ok是验证成功-->
               <div class="">
                   <label for="proCode">供应商编码：</label>
+                  <input type="hidden" name="id" value="${provider.id }">
                   <input type="text" name="proCode" id="proCode" value="${provider.proCode }" readonly="readonly"> 
               </div>
               <div>
@@ -47,21 +49,22 @@
                   <input type="text" name="proDesc" id="proDesc" value="${provider.proDesc }"> 
               </div>
               
-               <div>
-                  <label for="proDesc">执照：</label>
-                  <img src="${pageContext.request.contextPath }/${provider.frontCode}" />
-                  <input type="file">
-              </div>
+              <div>
+                    <label for="proDesc">执照：</label>
+                    <img src="${pageContext.request.contextPath }/${provider.license}" />
+                    <input type="file" name="licenses" id="license" value=""> 
+                </div>
+                <div>
+                    <label for="proDesc">正面组织机构：</label>
+                    <img src="${pageContext.request.contextPath }/${provider.frontCode}" />
+                    <input type="file" name="licenses" id="frontCode" value=""> 
+                </div>
+                <div>
+                    <label for="proDesc">反面组织机构：</label>
+                    <img src="<%=request.getContextPath() %>/${provider.sideCode}" />
+                    <input type="file" name="licenses" id="sideCode" value=""> 
+                </div>
               
-               <div>
-                  <label for="proDesc">正面组织机构：</label>
-                  <input type="text" name="proDesc" id="proDesc" value="${provider.proDesc }"> 
-              </div>
-              
-               <div>
-                  <label for="proDesc">反面组织机构：</label>
-                  <input type="text" name="proDesc" id="proDesc" value="${provider.proDesc }"> 
-              </div>
               <div class="providerAddBtn">
                   <input type="button" name="save" id="save" value="保存">
 				  <input type="button" id="back" name="back" value="返回" >

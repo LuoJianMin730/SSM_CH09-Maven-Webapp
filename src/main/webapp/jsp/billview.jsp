@@ -12,7 +12,7 @@
          <p><strong>商品单位：</strong><span>${bill.productUnit }</span></p>
          <p><strong>商品数量：</strong><span>${bill.productCount }</span></p>
          <p><strong>总金额：</strong><span>${bill.totalPrice }</span></p>
-         <p><strong>供应商：</strong><span>${bill.providerName }</span></p>
+         <p><strong>供应商：</strong><span>${bill.proName }</span></p>
          <p><strong>是否付款：</strong>
          	<span>
          		<c:if test="${bill.isPayment == 1}">未付款</c:if>

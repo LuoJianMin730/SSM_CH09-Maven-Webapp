@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.ljm.dao.SmbmsBillDao"> 
+	<!-- 分页查询所有订单 -->
+   <select id="getListSmbmsBill" resultType="SmbmsBill">
+   SELECT b.*,p.`proName` FROM `smbms_bill` b INNER JOIN `smbms_provider` p ON b.`providerId` = p.`id`
+   <trim prefix="where" prefixOverrides="and | or">
+   		<if test="productName != null and productName != '' ">and `productName` LIKE CONCAT('%',#{productName},'%')</if>
+	   	<if test="providerId != null and providerId != 0 ">and `providerId` = #{providerId}</if>
+	   	<if test="isPayment != null and isPayment != 0 ">and `isPayment` = #{isPayment}</if>
+   </trim>
+	LIMIT #{pageIndex},#{pagaSize}
+   </select>
+   <!-- 查询用户总行数 -->
+   <select id="getListSmbmsBillCount" resultType="Integer">
+    SELECT count(1) FROM `smbms_bill` b INNER JOIN `smbms_provider` p ON b.`providerId` = p.`id`
+ 	<trim prefix="where" prefixOverrides="and | or">
+	   	<if test="productName != null and productName != '' ">and `productName` LIKE CONCAT('%',#{productName},'%')</if>
+	   	<if test="providerId != null and providerId != 0 ">and `providerId` = #{providerId}</if>
+	   	<if test="isPayment != null and isPayment != 0 ">and `isPayment` = #{isPayment}</if>
+   </trim>
+   </select>
+   <!-- 新增供应商 -->
+   <insert id="addSmbmsBill" parameterType="SmbmsBill">
+   INSERT INTO `smbms_bill`
+            (
+            <trim suffixOverrides=",">
+				<if test="id != null ">id,</if>
+				<if test="billCode != null ">billCode,</if>
+				<if test="productName != null ">productName,</if>
+				<if test="productDesc != null ">productDesc,</if>
+				<if test="productUnit != null ">productUnit,</if>
+				<if test="productCount != null ">productCount,</if>
+				<if test="totalPrice != null ">totalPrice,</if>
+				<if test="isPayment != null ">isPayment,</if>
+				<if test="createdBy != null ">createdBy,</if>
+				<if test="creationDate != null ">creationDate,</if>
+				<if test="modifyBy != null ">modifyBy,</if>
+				<if test="modifyDate != null ">modifyDate,</if>
+				<if test="providerId != null ">providerId,</if>
+			</trim>
+             )
+	VALUES (
+			<trim suffixOverrides=",">
+				<if test="id != null ">#{id},</if>
+				<if test="billCode != null ">#{billCode},</if>
+				<if test="productName != null ">#{productName},</if>
+				<if test="productDesc != null ">#{productDesc},</if>
+				<if test="productUnit != null ">#{productUnit},</if>
+				<if test="productCount != null ">#{productCount},</if>
+				<if test="totalPrice != null ">#{totalPrice},</if>
+				<if test="isPayment != null ">#{isPayment},</if>
+				<if test="createdBy != null ">#{createdBy},</if>
+				<if test="creationDate != null ">#{creationDate},</if>
+				<if test="modifyBy != null ">#{modifyBy},</if>
+				<if test="modifyDate != null ">#{modifyDate},</if>
+				<if test="providerId != null ">#{providerId},</if>
+			</trim>
+	        )
+   </insert>
+   <!-- 按id查询供应商信息 -->
+   <select id="getSmbmsBillByid" parameterType="Long" resultType="SmbmsBill">
+   SELECT b.*,p.`proName` FROM smbms_bill b
+	INNER JOIN `smbms_provider` p
+	ON b.`providerId` = p.`id` 
+   where b.id = #{id}
+   </select>
+   <!-- 删除供应商信息 -->
+   <delete id="deleteSmbmsBill" parameterType="Long">
+   	DELETE
+	FROM `smbms_bill`
+	WHERE `id` = #{id}
+   </delete>
+   <!--  更新供应商信息 -->
+   <update id="updateSmbmsBill" parameterType="SmbmsBill">
+	UPDATE `smbms_bill`
+	SET 
+	<trim suffixOverrides=",">
+		<if test="billCode != null ">`billCode` = #{billCode},</if>
+		<if test="productName != null ">`productName` = #{productName},</if>
+		<if test="productDesc != null ">`productDesc` = #{productDesc},</if>
+		<if test="productUnit != null ">`productUnit` = #{productUnit},</if>
+		<if test="productCount != null ">`productCount` = #{productCount},</if>
+		<if test="totalPrice != null ">`totalPrice` = #{totalPrice},</if>
+		<if test="isPayment != null ">`isPayment` = #{isPayment},</if>
+		<if test="createdBy != null ">`createdBy` = #{createdBy},</if>
+		<if test="creationDate != null ">`creationDate` = #{creationDate},</if>
+		<if test="modifyBy != null ">`modifyBy` = #{modifyBy},</if>
+		<if test="modifyDate != null ">`modifyDate` = #{modifyDate},</if>
+		<if test="providerId != null ">`providerId` = #{providerId},</if>
+	</trim>
+	WHERE `id` = #{id}
+   </update>
+</mapper>

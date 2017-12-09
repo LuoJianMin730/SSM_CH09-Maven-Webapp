@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="fm"%>
 <%@include file="/jsp/common/head.jsp"%>
 
 <div class="right">
@@ -8,9 +9,9 @@
          <span>订单管理页面 >> 订单添加页面</span>
      </div>
      <div class="providerAdd">
-         <form id="billForm" name="billForm" method="post" action="${pageContext.request.contextPath }/jsp/bill.do">
+         <form id="billForm" name="billForm" method="post" action="${pageContext.request.contextPath }/bill/addSmbmsBill.do">
              <!--div的class 为error是验证错误，ok是验证成功-->
-             <input type="hidden" name="method" value="add">
+           <!--   <input type="hidden" name="method" value="add"> -->
              <div class="">
                  <label for="billCode">订单编码：</label>
                  <input type="text" name="billCode" class="text" id="billCode" value=""> 
@@ -20,6 +21,12 @@
              <div>
                  <label for="productName">商品名称：</label>
                  <input type="text" name="productName" id="productName" value=""> 
+				 <font color="red"></font>
+             </div>
+             <div>
+                 <label for="productDesc">商品描述：</label>
+                 <input type="text" name="productDesc" id="productDesc" value=""> 
+                 	格式 ：（水果--苹果）
 				 <font color="red"></font>
              </div>
              <div>
@@ -39,8 +46,16 @@
              </div>
              <div>
                  <label >供应商：</label>
-                 <select name="providerId" id="providerId">
-		         </select>
+                 <!-- <select name="providerId" id="providerId">
+		         </select> -->
+		         <select name="providerId">
+					<c:if test="${providerList != null }">
+					   <option value="0">--请选择--</option>
+					   <c:forEach var="provider" items="${providerList}">
+					   		<option value="${provider.id}">${provider.proName}</option>
+					   </c:forEach>
+					</c:if>
+       			 </select>
 				 <font color="red"></font>
              </div>
              <div>

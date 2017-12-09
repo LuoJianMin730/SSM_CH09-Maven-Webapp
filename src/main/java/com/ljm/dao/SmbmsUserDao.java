@@ -44,4 +44,22 @@ public interface SmbmsUserDao {
 	 * @return
 	 */
 	SmbmsUser getSmbmsUserByid(Long id);
+	/**
+	 * 修改用户密码
+	 * @param id
+	 * @return
+	 */
+	int updatePwd(@Param("id") Long id,@Param("userPassword") String userPassword);
+	/**
+	 * 删除用户信息
+	 * @param id
+	 * @return
+	 */
+	int deleteSmbmsUser(Long id);
+	/**
+	 * 修改用户信息
+	 * @param user
+	 * @return
+	 */
+	int updateSmbmsUser(SmbmsUser user);
 }

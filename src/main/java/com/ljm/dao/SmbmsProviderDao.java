@@ -48,5 +48,10 @@ public interface SmbmsProviderDao {
 	 * @return
 	 */
 	int updateSmbmsProvider(SmbmsProvider smbmsProvider);
+	/**
+	 * 查询所有供应商信息
+	 * @return 所有供应商信息
+	 */
+	List<SmbmsProvider> getListSmbmsProviderAll();
 	
 }
